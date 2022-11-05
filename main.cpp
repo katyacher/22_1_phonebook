@@ -56,7 +56,7 @@ void multimap_search(std::multimap<std::string, std::string>& myMap, std::string
         std::cout <<  "There is no user with this name" << std::endl;
     }
     for(Iterator it = result.first; it != result.second; ++it){
-        std::cout << it->second << ", ";
+        std::cout << it->second << " ";
     }
 }
 
