@@ -8,9 +8,6 @@ bool is_phone_number(std::string number);
 void multimap_search(std::multimap<std::string, std::string>& myMap, std::string key);
 void map_search(std::map<std::string, std::string>& myMap, std::string key);
 
-void print_phonebook(std::multimap<std::string, std::string>& myMap);
-void print_phonebook_map(std::map<std::string, std::string>& myMap);
-
 int main() {
     std::cout << "22.1 Phonebook\n";
 
@@ -36,21 +33,18 @@ int main() {
         ret = Num_key_phonebook.insert(std::pair<std::string, std::string>(first_word, second_word));
         if( ret.second == false){
             std::cout << "This phone number is already in the phonebook";
-            std::cout << " with a surname " << ret.first->second << std::endl;
+            std::cout << " with a name " << ret.first->second << std::endl;
         } else{
             Name_key_phonebook.emplace(second_word, first_word);
+            std::cout << "User added successfully.";
         }
     }
-
-    print_phonebook_map(Num_key_phonebook);
-    print_phonebook(Name_key_phonebook);
-
 }
 
 
 bool is_phone_number(std::string number){
     for(int i = 0; i < number.length(); i++){
-        if((number[i] <= '0' || number[i] >= '9') && number[i] != '-') return false;
+        if((number[i] < '0' || number[i] > '9') && number[i] != '-') return false;
     }
     return true;
 }
@@ -58,10 +52,12 @@ bool is_phone_number(std::string number){
 void multimap_search(std::multimap<std::string, std::string>& myMap, std::string key){
     typedef std::multimap<std::string, std::string>::iterator Iterator;
     std::pair<Iterator,Iterator> result = myMap.equal_range(key);
+    if(result.first == myMap.end()){
+        std::cout <<  "There is no user with this name" << std::endl;
+    }
     for(Iterator it = result.first; it != result.second; ++it){
         std::cout << it->second << ", ";
     }
-    std::cout << std::endl;
 }
 
 void map_search(std::map<std::string, std::string>& myMap, std::string key){
@@ -70,16 +66,5 @@ void map_search(std::map<std::string, std::string>& myMap, std::string key){
         std::cout << it->second << std::endl;
     } else {
         std::cout <<  "There is no user with this phone number" << std::endl;
-    }
-}
-
-void print_phonebook(std::multimap<std::string, std::string>& myMap){
-    for(std::multimap<std::string, std::string>::iterator it = myMap.begin(); it!= myMap.end(); ++it){
-        std::cout << it->first << " " << it->second << std::endl;
-    }
-}
-void print_phonebook_map(std::map<std::string, std::string>& myMap){
-    for(std::map<std::string, std::string>::iterator it = myMap.begin(); it!= myMap.end(); ++it){
-        std::cout << it->first << " " << it->second << std::endl;
     }
 }
